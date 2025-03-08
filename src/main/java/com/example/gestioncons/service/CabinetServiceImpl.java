@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 
 public class CabinetServiceImpl implements CabinetService {
-    private PatientsRepository patientsRepository;
+    private final PatientsRepository patientsRepository;
     private ConsultationRepository consultationRepository;
 
     public CabinetServiceImpl(PatientsRepository patientsRepository, ConsultationRepository consultationRepository) {
@@ -33,14 +33,23 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public Patient getPatientByID(Long id) {
+
         return patientsRepository.findById(id).get();
     }
+
+    @Override
+    public Consultation getConsultationByID(Long idConsultation) {
+        return consultationRepository.findById(idConsultation).get();
+    }
+
 
 
     @Override
     public void deletePatient(int patient) {
 
     }
+
+
 
     @Override
     public void deletePatient(Patient patient) {
@@ -65,4 +74,11 @@ public class CabinetServiceImpl implements CabinetService {
         return consultationRepository.findAll();
     }
 
+    @Override
+    public void saveConsultation(Consultation consultation) {
+        consultationRepository.save(consultation);
+        consultationRepository.save(consultation);
+
+    }
 }
+

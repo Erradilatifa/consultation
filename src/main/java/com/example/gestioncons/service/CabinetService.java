@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface CabinetService {
     void savePatient(Patient patient);
+    void saveConsultation(Consultation consultation);
     List<Patient> getAllPatients();
      Patient getPatientByID(Long id);
-
+     Consultation getConsultationByID(Long idConsultation);
     void deletePatient(int patient);
 
     void deletePatient(Patient patient);
@@ -18,6 +19,7 @@ public interface CabinetService {
 
     void AddConcultation(Consultation consultation);
     List<Consultation> getAllConsultations();
+
 
 
 

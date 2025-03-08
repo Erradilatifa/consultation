@@ -1,0 +1,55 @@
+<!--
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title th:text="${'Consultations for ' + patient.prenom + ' ' + patient.name}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2 th:text="${'Consultations for ' + patient.prenom + ' ' + patient.name}"></h2>
+
+    <div class="mb-3">
+        <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-secondary">Back to Patient</a>
+        <a th:href="@{/consultations/new}" class="btn btn-primary">Add New Consultation</a>
+    </div>
+
+    Display alert if no consultations
+    <div th:if="${#lists.isEmpty(consultations)}" class="alert alert-info">
+        No consultations found for this patient.
+    </div>
+
+    Consultations table
+    <div th:unless="${#lists.isEmpty(consultations)}" class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="consultation : ${consultations}">
+                <td th:text="${consultation.idConsultation}"></td>
+                <td th:text="${consultation.description}"></td>
+                <td th:text="${#temporals.format(consultation.dateConsultation, 'yyyy-MM-dd HH:mm')}"></td>
+
+                <td>
+                    <a th:href="@{/consultations/{id}/edit(id=${consultation.id})}"
+                       class="btn btn-warning btn-sm">Edit</a>
+                    <a th:href="@{/consultations/{id}/delete(id=${consultation.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this consultation?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+-->

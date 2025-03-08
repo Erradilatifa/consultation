@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 
 
-@AllArgsConstructor
-
 public class Patient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

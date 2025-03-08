@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+  <title th:text="${consultation.idConsultation} ? 'Edit Consultation' : 'New Consultation'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2 th:text="${consultation.idConsultation} ? 'Edit Consultation' : 'New Consultation'"></h2>
+
+  <form th:action="@{/consultations}" th:object="${consultation}" method="post">
+    <!-- Hidden ID field for updates -->
+    <input type="hidden" th:field="*{idConsultation}" />
+
+    <div class="mb-3">
+      <label class="form-label">Patient</label>
+      <select class="form-select" th:field="*{patient}" required>
+        <option value="">-- Select Patient --</option>
+        <option th:each="patient : ${patients}"
+                th:value="${patient}"
+                th:text="${patient.prenom + ' ' + patient.name}"></option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea th:name="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Consultation Date</label>
+      <input th:name="date" type="datetime-local" class="form-control" th:field="*{dateConsultation}" required>
+    </div>
+
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a th:href="@{/consultations}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

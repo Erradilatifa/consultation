@@ -1,4 +1,5 @@
 package com.example.gestioncons.web;
+import com.example.gestioncons.entity.Consultation;
 import com.example.gestioncons.entity.Patient;
 import com.example.gestioncons.service.CabinetService;
 import org.springframework.stereotype.Controller;
@@ -6,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 
@@ -50,4 +53,32 @@ public class CabinetController {
 
 
     }
+    @GetMapping("/consultations")
+    public String getConsultation(Model model) {
+        List<Consultation> consultation=cabinetService.getAllConsultations();
+        model.addAttribute("consultations",consultation);
+        return "consultations";
+    }
+
+    @GetMapping("/consultations/new")
+    public String showConsultationForm(Model model) {
+        Consultation consultation = new Consultation();
+        List<Patient> patients = cabinetService.getAllPatients();
+        model.addAttribute("consultation", consultation);
+        model.addAttribute("patients", patients);
+        return "add_consultation";
+    }
+
+
+
+    @PostMapping("/consultations")
+    public String saveConsultation(@ModelAttribute Consultation consultation) {
+        cabinetService.saveConsultation(consultation);
+        return "redirect:/consultations";
+    }
+
+
+
+
+
 }
