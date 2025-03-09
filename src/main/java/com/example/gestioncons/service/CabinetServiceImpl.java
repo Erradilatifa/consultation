@@ -64,7 +64,7 @@ public class CabinetServiceImpl implements CabinetService {
     }
 
     @Override
-    public void AddConcultation(Consultation consultation) {
+    public void newConcultation(Consultation consultation) {
         consultationRepository.save(consultation);
 
     }

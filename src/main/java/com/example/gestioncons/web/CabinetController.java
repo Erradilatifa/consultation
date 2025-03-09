@@ -4,6 +4,7 @@ import com.example.gestioncons.entity.Patient;
 import com.example.gestioncons.service.CabinetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class CabinetController {
     }
 
     @GetMapping("/consultations/new")
-    public String showConsultationForm(Model model) {
+    public String newConsultation(Model model) {
         Consultation consultation = new Consultation();
         List<Patient> patients = cabinetService.getAllPatients();
         model.addAttribute("consultation", consultation);
@@ -72,9 +73,12 @@ public class CabinetController {
 
 
     @PostMapping("/consultations")
-    public String saveConsultation(@ModelAttribute Consultation consultation) {
+    public String saveConsultation(@ModelAttribute("consultaion") Consultation consultation, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/consultations";
+        }
         cabinetService.saveConsultation(consultation);
-        return "redirect:/consultations";
+        return "redirect:/consultations/new";
     }
 
 

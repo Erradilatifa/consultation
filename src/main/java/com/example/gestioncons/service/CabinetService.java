@@ -17,7 +17,7 @@ public interface CabinetService {
 
     void deletePatientById(Long id);
 
-    void AddConcultation(Consultation consultation);
+    void newConcultation(Consultation consultation);
     List<Consultation> getAllConsultations();
 
 
