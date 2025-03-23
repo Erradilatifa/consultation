@@ -19,13 +19,18 @@ Cette interface appartient à un système de consultation des patients. Elle per
 ![EditPatient](https://github.com/user-attachments/assets/3d93cb57-e50a-4689-b1fd-a911baa153e7)
 
 # ListConsultations
+Cette interface appartient au système de consultation des patients et affiche la liste des consultations médicales.
 ![ListConsultations](https://github.com/user-attachments/assets/e499b6c6-4c59-4db3-a887-b0a4172031b7)
 
 
 # AddConsultation
+Cette interface appartient au système de consultation des patients et permet d'ajouter une nouvelle consultation.
+
 ![addConsultations](https://github.com/user-attachments/assets/94359710-9c7d-44fc-a2c1-adc5d784f482)
 
 # EditConsultation
+Cette page affiche le formulaire de modification d'une consultation existante dans le Système de Consultation des Patients.
+
 ![editConsultation](https://github.com/user-attachments/assets/d075b1e3-7c4e-4f1b-80c6-f9584e772185)
 
 
