@@ -1,6 +1,6 @@
 ﻿# gestion_consultation
 # accueil
-Cette page représente l'interface d'accueil du Système de Consultation des Patients,
+# Cette page représente l'interface d'accueil du Système de Consultation des Patients.
 ![Accueil](https://github.com/user-attachments/assets/0ba13308-117a-4bc8-8e13-ed6fadc5b586)
 
 # ListPatient
