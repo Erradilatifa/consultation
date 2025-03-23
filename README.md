@@ -15,8 +15,9 @@
 # EditPatient
 ![EditPatient](https://github.com/user-attachments/assets/3d93cb57-e50a-4689-b1fd-a911baa153e7)
 
-#ListConsultation
-![consultations](https://github.com/user-attachments/assets/4a0f2904-3de5-43a1-ad2b-0079f9550295)
+#ListConsultations
+![ListConsultations](https://github.com/user-attachments/assets/e499b6c6-4c59-4db3-a887-b0a4172031b7)
+
 
 # AddConsultation
 ![addConsultations](https://github.com/user-attachments/assets/94359710-9c7d-44fc-a2c1-adc5d784f482)
