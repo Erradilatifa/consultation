@@ -22,15 +22,6 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Consultation> Consultations;
 
-    public Patient(Long id, String name, String prenom, String email, String phone) {
-        this.id = id;
-        this.name = name;
-        this.prenom = prenom;
-        this.email = email;
-        this.phone = phone;
-
-    }
-
 
     public String getPhone() {
         return phone;
@@ -80,28 +71,6 @@ public class Patient {
         Consultations = consultations;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", Consultations=" + Consultations +
-                '}';
-    }
 
-    public Patient(Long id, String name, String prenom, String email, String phone, List<Consultation> consultations) {
-        this.id = id;
-        this.name = name;
-        this.prenom = prenom;
-        this.email = email;
-        this.phone = phone;
-        Consultations = consultations;
-    }
-
-    public Patient() {
-    }
 }
 

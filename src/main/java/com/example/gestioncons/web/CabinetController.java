@@ -4,12 +4,9 @@ import com.example.gestioncons.entity.Patient;
 import com.example.gestioncons.service.CabinetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 
@@ -56,30 +53,45 @@ public class CabinetController {
     }
     @GetMapping("/consultations")
     public String getConsultation(Model model) {
-        List<Consultation> consultation=cabinetService.getAllConsultations();
-        model.addAttribute("consultations",consultation);
+        List<Consultation> consultations=cabinetService.getAllConsultations();
+        model.addAttribute("consultations",consultations);
         return "consultations";
     }
 
-    @GetMapping("/consultations/new")
+    @GetMapping("/new")
     public String newConsultation(Model model) {
-        Consultation consultation = new Consultation();
+        Consultation consultations = new Consultation();
         List<Patient> patients = cabinetService.getAllPatients();
-        model.addAttribute("consultation", consultation);
+        model.addAttribute("consultations", consultations);
         model.addAttribute("patients", patients);
         return "add_consultation";
     }
 
-
-
     @PostMapping("/consultations")
-    public String saveConsultation(@ModelAttribute("consultaion") Consultation consultation, BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:/consultations";
-        }
-        cabinetService.saveConsultation(consultation);
-        return "redirect:/consultations/new";
+    public String addConsultation(@ModelAttribute Consultation consultation) {
+        cabinetService.addConsultation(consultation);
+        return "redirect:/consultations";
     }
+    @GetMapping("/consultations/edit/{id}")
+    public String editConsultation(@PathVariable Long id, Model model) {
+        Consultation consultation = cabinetService.getConsultationsById(id);
+        model.addAttribute("consultation", consultation);
+        model.addAttribute("patients", cabinetService.getAllPatients());
+        return "editconsultation";
+    }
+    @PostMapping("/update/{id}")
+    public String updateConsultation(@PathVariable("id") long id, @ModelAttribute Consultation consultation) {
+        consultation.setIdConsultation(id);
+        cabinetService.updateConsultation(consultation);
+        return "redirect:/consultations";
+    }
+
+    @GetMapping("/deleteConsultation/{id}")
+    public String deleteConsultation(@PathVariable("id") long id) {
+        cabinetService.deleteConsultationById(id);
+        return "redirect:/consultations";
+    }
+
 
 
 

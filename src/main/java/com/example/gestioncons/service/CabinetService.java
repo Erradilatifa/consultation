@@ -7,20 +7,21 @@ import java.util.List;
 
 public interface CabinetService {
     void savePatient(Patient patient);
-    void saveConsultation(Consultation consultation);
     List<Patient> getAllPatients();
      Patient getPatientByID(Long id);
-     Consultation getConsultationByID(Long idConsultation);
     void deletePatient(int patient);
-
     void deletePatient(Patient patient);
-
     void deletePatientById(Long id);
 
-    void newConcultation(Consultation consultation);
+
+
+
+
+    void addConsultation(Consultation consultation);
     List<Consultation> getAllConsultations();
-
-
+    Consultation getConsultationsById(Long id);
+    void updateConsultation(Consultation patient);
+    void  deleteConsultationById(Long id);
 
 
 }

@@ -1,51 +1,340 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Consultation System</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --primary-dark: #1d5c3a;
+            --secondary: #4caf50;
+            --light: #e9f5e9;
+            --dark: #0f4c34;
+            --white: #ffffff;
+            --gray: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray);
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 0.8rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white) !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--white) !important;
+            margin: 0 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .welcome-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .welcome-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: var(--white);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .welcome-header h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+
+        .welcome-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .welcome-body {
+            padding: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light);
+        }
+
+        .feature-icon i {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .feature-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-content h3 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-custom {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+
+        footer {
+            background-color: var(--dark); /* Couleur de fond sombre */
+            color: var(--white); /* Texte en blanc */
+            padding: 3rem 0 2rem; /* Espacement intérieur */
+            height: 270px; /* Hauteur fixe */
+            margin-top:100px; /* Pour le positionner en bas de la page */
+        }
+
+        .footer-title {
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Section content styles */
+        .section-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Override for content section */
+        [layout:fragment="content"] {
+            padding: 2rem 0;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/}">home</a>
-            </li>
-            <li class="nav-item" >
-                <a class="nav-link" th:href="@{/patients}">patients</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/consultations}">Consultation</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/contact}">Contact</a>
-            </li>
-
-        </ul>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-hospital-user"></i>
+                Patient Consultation System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/patients}">
+                            <i class="fas fa-user-injured me-2"></i>Patients
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/consultations}">
+                            <i class="fas fa-stethoscope me-2"></i>Consultations
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 </header>
-<div class="container">
-    <section layout:fragment="content">
 
+<main class="main-content">
+    <div class="container">
+        <div layout:fragment="content">
+            <div class="jumbotron">
+                <h1 class="display-4"><i class="fas fa-heartbeat me-3"></i>Welcome to Patient Consultation System</h1>
+                <p class="lead">Manage your patients and consultations efficiently</p>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-user-injured"></i>Patients</h5>
+                                <p class="card-text">View and manage your patients' information</p>
+                                <a th:href="@{/patients}" class="btn btn-success">
+                                    Go to Patients <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-stethoscope"></i>Consultations</h5>
+                                <p class="card-text">Schedule and manage consultations</p>
+                                <a th:href="@{/consultations}" class="btn btn-success">
+                                    Go to Consultations <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
-    </section>
-
-</div>
-<footer style="background-color: #f1f1f1; padding: 20px; text-align: center; margin-top: 50px;">
-    <p>&copy; 2023 MonSiteWeb. Tous droits réservés.</p>
-    <p>Contact : <a href="mailto:contact@monsiteweb.com" style="color: #007BFF; text-decoration: none;">contact@monsiteweb.com</a></p>
-    <p>Suivez-nous sur :
-        <a href="https://twitter.com" style="color: #007BFF; text-decoration: none;">Twitter</a> |
-        <a href="https://facebook.com" style="color: #007BFF; text-decoration: none;">Facebook</a>
-    </p>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5 class="footer-title">Patient Consultation System</h5>
+                <p>A comprehensive solution for healthcare providers to manage patient consultations efficiently and effectively.</p>
+                <div class="social-links">
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h5 class="footer-title">Quick Links</h5>
+                <div class="footer-links">
+                    <a th:href="@{/}"><i class="fas fa-home me-2"></i> Home</a>
+                    <a th:href="@{/patients}"><i class="fas fa-user-injured me-2"></i> Patients</a>
+                    <a th:href="@{/consultations}"><i class="fas fa-stethoscope me-2"></i> Consultations</a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="footer-title">Contact Us</h5>
+                <div class="footer-links">
+                    <a href="mailto:contact@patientsystem.com"><i class="fas fa-envelope me-2"></i> contact@patientsystem.com</a>
+                    <a href="tel:+123456789"><i class="fas fa-phone me-2"></i> 0655097546</a>
+                    <a href="#"><i class="fas fa-map-marker-alt me-2"></i> 123 Medical Center, Health Avenue</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Patient Consultation System. All rights reserved.</p>
+        </div>
+    </div>
 </footer>
 
-
-
-
-
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

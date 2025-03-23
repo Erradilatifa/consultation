@@ -1,59 +1,275 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}"
->
+      layout:decorate="~{layout.html}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Liste des Patients</title>
+    <!-- Materialize CSS via CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Styles personnalisés -->
+    <style>
+        :root {
+            --primary-color: #2e7d32;  /* Vert foncé */
+            --secondary-color: #4caf50;  /* Vert */
+            --accent-color: #81c784;  /* Vert clair */
+            --background-color: #f1f8e9;  /* Fond légèrement verdâtre */
+        }
 
-    <title>patients</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        body {
+            background-color: var(--background-color);
+        }
+
+        .page-header {
+            padding: 20px 0;
+            background-color: var(--primary-color);
+            color: white;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 300;
+        }
+
+        .add-button {
+            background-color: var(--secondary-color);
+            border-radius: 30px;
+            padding: 0 25px;
+        }
+
+        .add-button:hover {
+            background-color: var(--accent-color);
+        }
+
+        .search-container {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-container .input-field .prefix {
+            color: var(--primary-color);
+        }
+
+        .search-container input:focus {
+            border-bottom: 1px solid var(--primary-color) !important;
+            box-shadow: 0 1px 0 0 var(--primary-color) !important;
+        }
+
+        .search-container input:focus + label {
+            color: var(--primary-color) !important;
+        }
+
+        .patient-card {
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .patient-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-content {
+            padding: 20px !important;
+        }
+
+        .patient-name {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .info-icon {
+            margin-right: 10px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .card-action {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px !important;
+            border-radius: 0 0 8px 8px;
+            background-color: #f9f9f9;
+        }
+
+        .action-btn {
+            margin-left: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-btn {
+            background-color: var(--primary-color);
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .empty-state-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .pagination li.active {
+            background-color: var(--primary-color);
+        }
+    </style>
 </head>
 <body>
-<section layout:fragment="content" >
-    <h2>les patients</h2>
-    <a th:href="@{/patients/new}" class="btn btn-primary mb-3" >Add Patient</a>
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>Tel</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="patient:${patients}">
-            <td th:text="${patient.id}"></td>
-            <td th:text="${patient.name}"></td>
-            <td th:text="${patient.prenom}"></td>
-            <td th:text="${patient.email}"></td>
-            <td th:text="${patient.phone}"></td>
-            <td>
-                <!-- Lien Supprimer -->
-                <a th:href="@{/deletePatient(id=${patient.id})}" class="text-danger me-3 fs-5" data-bs-toggle="tooltip" title="Supprimer ce patient">
-                    <i class="fas fa-trash-alt"></i>
+<div layout:fragment="content">
+    <!-- En-tête de page -->
+    <div class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h2 class="page-title">Liste des Patients</h2>
+                <a th:href="@{/patients/new}" class="btn waves-effect waves-light add-button">
+                    <i class="material-icons left">add</i>Nouveau Patient
                 </a>
-                <!-- Lien Modifier -->
-                <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="text-decoration-none text-warning fs-5" data-bs-toggle="tooltip" title="Modifier ce patient">
-                    <i class="fas fa-edit"></i>
-                </a>
+            </div>
+        </div>
+    </div>
 
+    <!-- Message si aucun patient -->
+    <div th:if="${#lists.isEmpty(patients)}" class="empty-state">
+        <i class="material-icons">people_outline</i>
+        <p class="empty-state-text">Aucun patient trouvé dans la base de données.</p>
+        <a th:href="@{/patients/new}" class="btn waves-effect waves-light add-button">
+            <i class="material-icons left">add</i>Ajouter un patient
+        </a>
+    </div>
 
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+    <!-- Cartes des patients -->
+    <div class="row" th:unless="${#lists.isEmpty(patients)}">
+        <div class="col s12 m6 l4" th:each="patient : ${patients}">
+            <div class="card patient-card">
+                <div class="card-content">
+                    <div class="patient-name" th:text="${patient.name + ' ' + patient.prenom}"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+                    <div class="patient-info">
+                        <i class="material-icons info-icon">fingerprint</i>
+                        <span th:text="${'ID: ' + patient.id}"></span>
+                    </div>
 
+                    <div class="patient-info">
+                        <i class="material-icons info-icon">email</i>
+                        <span th:text="${patient.email}"></span>
+                    </div>
+
+                    <div class="patient-info">
+                        <i class="material-icons info-icon">phone</i>
+                        <span th:text="${patient.phone}"></span>
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn-floating waves-effect waves-light edit-btn action-btn" title="Modifier">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a th:href="@{/deletePatient(id=${patient.id})}" class="btn-floating waves-effect waves-light delete-btn action-btn" title="Supprimer"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce patient?');">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" th:if="${!#lists.isEmpty(patients) && patients.size() > 9}">
+        <ul class="pagination">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="active"><a href="#!">1</a></li>
+            <li class="waves-effect"><a href="#!">2</a></li>
+            <li class="waves-effect"><a href="#!">3</a></li>
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- jQuery et Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialisation des composants Materialize
+
+        // Fonction de recherche
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('keyup', function() {
+            const searchText = this.value.toLowerCase();
+            const patientCards = document.querySelectorAll('.patient-card');
+
+            patientCards.forEach(card => {
+                const patientName = card.querySelector('.patient-name').textContent.toLowerCase();
+                const patientInfo = Array.from(card.querySelectorAll('.patient-info span'))
+                    .map(span => span.textContent.toLowerCase())
+                    .join(' ');
+
+                if (patientName.includes(searchText) || patientInfo.includes(searchText)) {
+                    card.closest('.col').style.display = '';
+                } else {
+                    card.closest('.col').style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

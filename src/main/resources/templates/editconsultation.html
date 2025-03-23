@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Consultation</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2e7d32;  /* Vert foncé */
+            --secondary-color: #43a047; /* Vert moyen */
+            --accent-color: #66bb6a;  /* Vert clair */
+            --background-color: #f9fbf9;  /* Fond légèrement teinté de vert */
+            --card-background: #ffffff;  /* Fond des cartes */
+            --text-color: #263238;  /* Couleur de texte principale */
+            --text-secondary: #546e7a;  /* Couleur de texte secondaire */
+            --border-color: #e0e0e0;  /* Couleur de bordure */
+            --shadow-color: rgba(0, 0, 0, 0.08);  /* Ombre subtile */
+            --highlight-color: #c8e6c9;  /* Vert très clair pour surbrillances */
+            --error-color: #e53935;  /* Rouge pour erreurs */
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .page-header {
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .page-title .material-icons {
+            margin-right: 10px;
+            vertical-align: middle;
+            font-size: 2rem;
+        }
+
+        .form-container {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            margin: 30px auto;
+            max-width: 700px;
+            position: relative;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .section-heading {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--highlight-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-heading .material-icons {
+            margin-right: 10px;
+            background-color: var(--highlight-color);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+        }
+
+        .input-field {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        /* Style pour les labels et champs de saisie */
+        .input-field label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .input-field input, .input-field select, .input-field textarea {
+            border: 1px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            padding: 0 15px !important;
+            height: 48px !important;
+            box-sizing: border-box !important;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .input-field textarea {
+            padding: 15px !important;
+            min-height: 120px !important;
+            height: auto !important;
+        }
+
+        .input-field input:focus, .input-field select:focus, .input-field textarea:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 1px var(--primary-color) !important;
+        }
+
+        /* Style pour placeholder et label actif */
+        .input-field input:focus + label,
+        .input-field input:not(.empty) + label,
+        .input-field textarea:focus + label,
+        .input-field textarea:not(.empty) + label {
+            color: var(--primary-color) !important;
+            transform: translateY(-14px) scale(0.8);
+        }
+
+        /* Icônes pour les champs */
+        .input-field .prefix {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            top: 0.5rem;
+        }
+
+        .input-field .prefix.active {
+            color: var(--primary-color);
+        }
+
+        /* Mise en forme pour les messages d'erreur */
+        .error-text {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+        }
+
+        /* Style pour les boutons */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            align-items: center;
+        }
+
+        .btn {
+            border-radius: 30px;
+            height: 48px;
+            line-height: 48px;
+            padding: 0 30px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+        }
+
+        .btn .material-icons {
+            margin-right: 5px;
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+
+        /* Style pour le select */
+        .select-wrapper input.select-dropdown {
+            border: 1px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            padding: 0 15px !important;
+            height: 48px !important;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color) !important;
+        }
+
+        .select-wrapper .caret {
+            color: var(--primary-color) !important;
+        }
+
+        .dropdown-content li > a, .dropdown-content li > span {
+            color: var(--primary-color) !important;
+        }
+
+        /* Required asterisk */
+        .required-field::after {
+            content: "*";
+            color: var(--error-color);
+            margin-left: 4px;
+        }
+
+        /* Style responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                margin: 20px 15px;
+            }
+
+            .btn-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation pour input focus */
+        @keyframes borderPulse {
+            0% { box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.4); }
+            70% { box-shadow: 0 0 0 5px rgba(67, 160, 71, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 160, 71, 0); }
+        }
+
+        .input-field input:focus, .input-field textarea:focus, .input-field select:focus {
+            animation: borderPulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- En-tête de page -->
+    <div class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h2 class="page-title">
+                    <i class="material-icons">edit</i>
+                    Edit Consultation
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h4 class="section-heading">
+                <i class="material-icons">healing</i>
+                Consultation Details
+            </h4>
+
+            <form th:action="@{/consultations/update/{id}(id=${consultation.idConsultation})}" th:object="${consultation}" method="post">
+                <!-- Champ caché pour l'ID -->
+                <input type="hidden" th:field="*{idConsultation}" />
+
+                <!-- Sélection du patient -->
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <select th:field="*{patient.id}" id="patient" class="browser-default" required>
+                        <option value="" disabled selected>-- Select Patient --</option>
+                        <option th:each="patient : ${patients}"
+                                th:value="${patient.id}"
+                                th:selected="${patient.id == consultation.patient.id}"
+                                th:text="${patient.name}"></option>
+                    </select>
+
+                </div>
+
+                <!-- Champ de date de consultation -->
+                <div class="input-field">
+                    <i class="material-icons prefix">event</i>
+                    <input type="date" class="validate" th:field="*{dateConsultation}" id="dateConsultation" required>
+                    <label for="dateConsultation" class="required-field">Consultation Date</label>
+                </div>
+
+                <!-- Champ de description -->
+                <div class="input-field">
+                    <i class="material-icons prefix">description</i>
+                    <textarea class="materialize-textarea" th:field="*{description}" id="description" rows="4" required></textarea>
+                    <label for="description" class="required-field">Description</label>
+                </div>
+
+                <!-- Boutons pour soumettre ou annuler -->
+                <div class="btn-container">
+                    <a th:href="@{/consultations}" class="btn btn-secondary waves-effect waves-light">
+                        <i class="material-icons left">arrow_back</i>Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                        <i class="material-icons left">save</i>Update Consultation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery et Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

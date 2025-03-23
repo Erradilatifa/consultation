@@ -3,41 +3,246 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-  <title th:text="${consultation.idConsultation} ? 'Edit Consultation' : 'New Consultation'"></title>
+  <title>New Consultation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Custom enhanced green theme */
+    :root {
+      --dark-green: #1a5e2a;
+      --medium-green: #28a745;
+      --light-green: #e6f7ec;
+      --accent-green: #40c463;
+      --hover-green: #218838;
+    }
+
+    .btn-success {
+      background-color: var(--medium-green);
+      border-color: var(--medium-green);
+      padding: 10px 24px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-success:hover {
+      background-color: var(--hover-green);
+      border-color: var(--hover-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .green-heading {
+      color: var(--dark-green);
+      font-weight: 600;
+      border-bottom: 2px solid var(--accent-green);
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--medium-green);
+      box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+    }
+
+    .green-card {
+      background-color: white;
+      border-left: 5px solid var(--medium-green);
+      border-radius: 12px;
+      box-shadow: 0 8px 15px rgba(40, 167, 69, 0.15);
+    }
+
+    .form-label {
+      color: var(--dark-green);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .consultation-header {
+      background-color: var(--light-green);
+      padding: 15px;
+      border-radius: 8px 8px 0 0;
+      margin: -24px -24px 20px -24px;
+      border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .form-control, .form-select {
+      border: 1px solid #ced4da;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:hover, .form-select:hover {
+      border-color: var(--medium-green);
+    }
+
+    .input-group-icon {
+      background-color: var(--light-green);
+      color: var(--dark-green);
+      border: 1px solid #ced4da;
+      border-right: none;
+      padding: 0 15px;
+      display: flex;
+      align-items: center;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .input-with-icon {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: white;
+      padding: 10px 24px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 15px;
+    }
+
+    .progress-step {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .progress-step::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e9ecef;
+      z-index: 1;
+    }
+
+    .step {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--medium-green);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-label {
+      position: absolute;
+      top: 40px;
+      font-size: 14px;
+      color: var(--dark-green);
+      font-weight: 500;
+      white-space: nowrap;
+      transform: translateX(-30%);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+    }
+
+    .animate-submit {
+      transition: all 0.3s ease;
+    }
+
+    .animate-submit:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 <body>
 <div layout:fragment="content">
-  <h2 th:text="${consultation.idConsultation} ? 'Edit Consultation' : 'New Consultation'"></h2>
+  <div class="container mt-4 mb-5">
+    <div class="card green-card p-4">
+      <div class="consultation-header">
+        <h2 class="green-heading mb-0">
+          <i class="fas fa-stethoscope me-2"></i>New Consultation
+        </h2>
+      </div>
 
-  <form th:action="@{/consultations}" th:object="${consultation}" method="post">
-    <!-- Hidden ID field for updates -->
-    <input type="hidden" th:field="*{idConsultation}" />
 
-    <div class="mb-3">
-      <label class="form-label">Patient</label>
-      <select class="form-select" th:field="*{patient}" required>
-        <option value="">-- Select Patient --</option>
-        <option th:each="patient : ${patients}"
-                th:value="${patient}"
-                th:text="${patient.prenom + ' ' + patient.name}"></option>
-      </select>
+      <form th:action="@{/consultations}" th:object="${consultations}" method="post">
+        <!-- Hidden ID field for updates -->
+        <input type="hidden" th:field="*{idConsultation}" />
+
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-user-injured me-2"></i>Patient
+          </label>
+          <select class="form-select" th:field="*{patient.id}" id="patient.id" required name="patient.id">
+            <option value="">-- Select Patient --</option>
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.prenom + ' ' + patient.name}"></option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-clipboard-list me-2"></i>Description
+          </label>
+          <textarea th:name="description" class="form-control" name="description" th:field="*{description}" rows="3" required
+                    placeholder="Enter detailed consultation notes..."></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-calendar-alt me-2"></i>Consultation Date
+          </label>
+          <div class="input-group">
+            <div class="input-group-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <input th:name="dateConsultation" type="date" id="dateConsultation" name="dateConsultation"
+                   class="form-control input-with-icon" th:field="*{dateConsultation}" required>
+          </div>
+        </div>
+
+        <div class="mb-3 action-btns">
+          <button type="submit" class="btn btn-success animate-submit">
+            <i class="fas fa-save me-2"></i>Save Consultation
+          </button>
+          <a th:href="@{/consultations}" class="btn btn-secondary">
+            <i class="fas fa-times me-2"></i>Cancel
+          </a>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label class="form-label">Description</label>
-      <textarea th:name="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Consultation Date</label>
-      <input th:name="date" type="datetime-local" class="form-control" th:field="*{dateConsultation}" required>
-    </div>
-
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <a th:href="@{/consultations}" class="btn btn-secondary">Cancel</a>
-    </div>
-  </form>
+  </div>
 </div>
+
+<!-- Add optional JS for enhanced interactions -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Optional: Add date validation
+    const dateField = document.getElementById('dateConsultation');
+    if (dateField) {
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      dateField.setAttribute('min', today);
+
+      // Set default value to today if empty
+      if (!dateField.value) {
+        dateField.value = today;
+      }
+    }
+  });
+</script>
 </body>
 </html>

@@ -37,10 +37,7 @@ public class CabinetServiceImpl implements CabinetService {
         return patientsRepository.findById(id).get();
     }
 
-    @Override
-    public Consultation getConsultationByID(Long idConsultation) {
-        return consultationRepository.findById(idConsultation).get();
-    }
+
 
 
 
@@ -64,21 +61,32 @@ public class CabinetServiceImpl implements CabinetService {
     }
 
     @Override
-    public void newConcultation(Consultation consultation) {
+    public void addConsultation(Consultation consultation) {
         consultationRepository.save(consultation);
 
     }
 
     @Override
-    public List<Consultation> getAllConsultations() {
+    public List<Consultation> getAllConsultations(){
+
         return consultationRepository.findAll();
     }
 
     @Override
-    public void saveConsultation(Consultation consultation) {
-        consultationRepository.save(consultation);
-        consultationRepository.save(consultation);
-
+    public Consultation getConsultationsById(Long id) {
+        return consultationRepository.findById(id).orElse(null);
     }
+    @Override
+    public void updateConsultation(Consultation consultation) {
+        consultationRepository.save(consultation);
+    }
+
+
+    @Override
+    public void deleteConsultationById(Long id) {
+        consultationRepository.deleteById(id);
+    }
+
+
 }
 

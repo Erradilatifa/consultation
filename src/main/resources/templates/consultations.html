@@ -3,57 +3,375 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Consultations List</title>
+    <title>Liste des Consultations</title>
+    <!-- Materialize CSS via CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Styles personnalisés -->
+    <style>
+        :root {
+            --primary-color: #2e7d32;  /* Vert foncé */
+            --secondary-color: #4caf50;  /* Vert moyen */
+            --accent-color: #81c784;  /* Vert clair */
+            --background-color: #f9fafb;  /* Fond presque blanc */
+            --card-background: #ffffff;  /* Fond des cartes */
+            --text-color: #37474f;  /* Bleu-gris foncé */
+            --text-secondary: #78909c;  /* Bleu-gris moyen */
+            --card-shadow: 0 4px 20px rgba(46, 125, 50, 0.08);  /* Ombre subtile */
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .page-header {
+            padding: 30px 0;
+            background-color: white;
+            color: var(--text-color);
+            margin-bottom: 40px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .add-button {
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            padding: 0 30px;
+            height: 48px;
+            line-height: 48px;
+            text-transform: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .add-button:hover {
+            background-color: var(--primary-color);
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .add-button i {
+            margin-right: 8px;
+        }
+
+        /* Modifications pour les cartes */
+        .consultations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .consultation-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .consultation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(46, 125, 50, 0.15);
+        }
+
+        .card-header {
+            position: relative;
+            padding: 20px 24px 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .consultation-date {
+            color: var(--primary-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .consultation-date .material-icons {
+            font-size: 1.1rem;
+            margin-right: 6px;
+        }
+
+        .patient-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-color);
+            line-height: 1.2;
+        }
+
+        .card-body {
+            padding: 20px 24px;
+            flex-grow: 1;
+        }
+
+        .consultation-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .consultation-id {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .consultation-id .material-icons {
+            font-size: 1.1rem;
+            margin-right: 6px;
+            opacity: 0.7;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px 24px;
+            background-color: rgba(0, 0, 0, 0.01);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .action-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .view-btn {
+            background-color: var(--primary-color);
+        }
+
+        .edit-btn {
+            background-color: #ffb300; /* Amber */
+        }
+
+        .delete-btn {
+            background-color: #e53935; /* Rouge */
+        }
+
+        .action-btn i {
+            font-size: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin: 40px auto;
+            max-width: 600px;
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--secondary-color);
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .empty-state-text {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .pagination li {
+            margin: 0 3px;
+        }
+
+        .pagination li a {
+            border-radius: 50px;
+            padding: 0 15px;
+        }
+
+        .pagination li.active {
+            background-color: var(--primary-color);
+            border-radius: 50px;
+        }
+
+        .consultation-status {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .status-scheduled {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--primary-color);
+        }
+
+        .status-canceled {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .consultations-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header, .card-body, .card-footer {
+                padding: 15px;
+            }
+
+            .patient-name {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>Consultations List</h2>
-
-    <div class="mb-3">
-        <a th:href="@{/consultations/new}" class="btn btn-primary">Add New Consultation</a>
+    <!-- En-tête de page -->
+    <div class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h2 class="page-title">Liste des Consultations</h2>
+                <a th:href="@{/new}" class="btn waves-effect waves-light add-button">
+                    <i class="material-icons">add</i>Nouvelle Consultation
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- Display alert if no consultations -->
-    <div th:if="${#lists.isEmpty(consultations)}" class="alert alert-info">
-        No consultations found. Please add a new consultation.
-    </div>
+    <div class="container">
+        <!-- Message si aucune consultation -->
+        <div th:if="${#lists.isEmpty(consultations)}" class="empty-state">
+            <i class="material-icons">event_note</i>
+            <p class="empty-state-text">Aucune consultation trouvée dans la base de données.</p>
+            <a th:href="@{/new}" class="btn waves-effect waves-light add-button">
+                <i class="material-icons left">add</i>Ajouter une consultation
+            </a>
+        </div>
 
-    <!-- Consultations table -->
-    <div th:unless="${#lists.isEmpty(consultations)}" class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Patient</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Created At</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="consultation : ${consultations}">
-                <td th:text="${consultation.id}"></td>
-                <td>
-                    <a th:if="${consultation.patient != null}"
-                       th:href="@{/patients/{id}(id=${consultation.patient.id})}"
-                       th:text="${consultation.patient.prenom + ' ' + consultation.patient.name}"></a>
-                    <span th:unless="${consultation.patient != null}">No patient assigned</span>
-                </td>
-                <td th:text="${consultation.description}"></td>
-                <td th:text="${#temporals.format(consultation.dateConsultation, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${#temporals.format(consultation.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                <td>
-                    <a th:href="@{/consultations/{id}/edit(id=${consultation.id})}"
-                       class="btn btn-warning btn-sm">Edit</a>
-                    <a th:href="@{/consultations/{id}/delete(id=${consultation.id})}"
-                       class="btn btn-danger btn-sm"
-                       onclick="return confirm('Are you sure you want to delete this consultation?')">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <!-- Cartes des consultations -->
+        <div class="consultations-container" th:unless="${#lists.isEmpty(consultations)}">
+            <div th:each="c : ${consultations}">
+                <div class="consultation-card">
+                    <div class="card-header">
+                        <div class="consultation-date">
+                            <span th:text="${c.dateConsultation}"></span>
+                        </div>
+                        <h3 class="patient-name" th:text="${c.patient != null ? c.patient.name : 'Pas de patient assigné'}"></h3>
+                        <!-- Status indicator (démonstration - à adapter selon votre modèle de données) -->
+                    </div>
+
+                    <div class="card-body">
+                        <div class="consultation-description" th:text="${c.description}"></div>
+                        <div class="consultation-id">
+                            <span th:text="${'ID: ' + c.idConsultation}"></span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a th:href="@{/consultations/edit/{id}(id=${c.idConsultation})}" class="btn-floating waves-effect waves-light edit-btn action-btn" title="Modifier">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a th:href="@{/deleteConsultation(id=${c.idConsultation})}" class="btn-floating waves-effect waves-light delete-btn action-btn" title="Supprimer"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette consultation?');">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" th:if="${!#lists.isEmpty(consultations) && consultations.size() > 12}">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
     </div>
 </div>
+
+<!-- jQuery et Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
 </html>
