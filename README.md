@@ -6,7 +6,7 @@
 # accueil
 ![Accueil](https://github.com/user-attachments/assets/0ba13308-117a-4bc8-8e13-ed6fadc5b586)
 
-#ListPatient
+# ListPatient
 ![Patients](https://github.com/user-attachments/assets/5ea6b36f-dea5-456f-b85a-e45ebda4c303)
 
 # AddPatient
@@ -15,7 +15,7 @@
 # EditPatient
 ![EditPatient](https://github.com/user-attachments/assets/3d93cb57-e50a-4689-b1fd-a911baa153e7)
 
-#ListConsultations
+# ListConsultations
 ![ListConsultations](https://github.com/user-attachments/assets/e499b6c6-4c59-4db3-a887-b0a4172031b7)
 
 
