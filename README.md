@@ -9,9 +9,13 @@ Cette interface permet aux professionnels de santé de visualiser rapidement leu
 ![Patients](https://github.com/user-attachments/assets/5ea6b36f-dea5-456f-b85a-e45ebda4c303)
 
 # AddPatient
+Cette page affiche le formulaire d'inscription pour ajouter un nouveau patient dans le Système de Consultation des Patients. 
+
 ![addPatient](https://github.com/user-attachments/assets/74ad7740-824f-4aec-997c-22e5ae8031a0)
 
 # EditPatient
+Cette interface appartient à un système de consultation des patients. Elle permet de modifier les informations d’un patient enregistré dans la base de données.
+
 ![EditPatient](https://github.com/user-attachments/assets/3d93cb57-e50a-4689-b1fd-a911baa153e7)
 
 # ListConsultations
