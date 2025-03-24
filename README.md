@@ -24,7 +24,7 @@ git clone https://github.com/your-username/your-repository.git
 ### 3️⃣ Build the project using Maven:
 mvn clean install
 
-###4️⃣ Run the application:
+### 4️⃣ Run the application:
 mvn spring-boot:run
 
 
