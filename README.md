@@ -15,6 +15,19 @@ Backend: Spring Boot, Spring Data JPA, Spring Web, Lombok, Hibernate
 Frontend: Thymeleaf, Bootstrap, HTML, CSS
 Database: MySQL
 
+# Setup
+Clone the repository:
+git clone https://github.com/your-username/gestion-consultation.git
+
+Navigate to the project directory:
+cd gestion-consultation
+
+Build the project using Maven:
+mvn clean install
+
+Run the application:
+mvn spring-boot:run
+
 # accueil
  Cette page représente l'interface d'accueil du Système de Consultation des Patients.
  
