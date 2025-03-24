@@ -11,6 +11,7 @@ Organisation Optimale des Données : Accès rapide et structuré aux information
 
 # Technologies Used
 Backend: Spring Boot, Spring Data JPA, Spring Web, Lombok, Hibernate
+
 Frontend: Thymeleaf, Bootstrap, HTML, CSS
 Database: MySQL
 
