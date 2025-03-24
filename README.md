@@ -8,6 +8,12 @@ Gestion des Patients : Ajouter, modifier, supprimer et consulter les information
 Planification des Consultations : Programmer et suivre les consultations médicales avec des détails tels que la date, la description et le patient concerné.
 
 Organisation Optimale des Données : Accès rapide et structuré aux informations grâce à une navigation fluide et un design réactif.
+
+# Technologies Used
+Backend: Spring Boot, Spring Data JPA, Spring Web, Lombok, Hibernate
+Frontend: Thymeleaf, Bootstrap, HTML, CSS
+Database: MySQL
+
 # accueil
  Cette page représente l'interface d'accueil du Système de Consultation des Patients.
  
