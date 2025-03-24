@@ -1,4 +1,13 @@
 ﻿# gestion_consultation
+ # Gestion Consultation Application
+
+La Gestion Consultation Application est une plateforme web conçue pour optimiser la gestion des dossiers patients et des consultations médicales. S'appuyant sur Spring Boot pour le backend et Thymeleaf pour le frontend, elle propose une interface intuitive et ergonomique destinée aux professionnels de santé.
+
+Gestion des Patients : Ajouter, modifier, supprimer et consulter les informations essentielles des patients (nom, email, téléphone, etc.).
+
+Planification des Consultations : Programmer et suivre les consultations médicales avec des détails tels que la date, la description et le patient concerné.
+
+Organisation Optimale des Données : Accès rapide et structuré aux informations grâce à une navigation fluide et un design réactif.
 # accueil
  Cette page représente l'interface d'accueil du Système de Consultation des Patients.
  
