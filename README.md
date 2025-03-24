@@ -19,7 +19,15 @@ Database: MySQL
 ### 1️⃣ Clone the repository:  
 git clone https://github.com/your-username/your-repository.git
 
- Accéder au répertoire du projet :
+ ### 2️⃣Navigate to the project directory:
+ cd gestion-consultation
+### 3️⃣ Build the project using Maven:
+mvn clean install
+
+###4️⃣ Run the application:
+mvn spring-boot:run
+
+
 
 # accueil
  Cette page représente l'interface d'accueil du Système de Consultation des Patients.
