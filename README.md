@@ -16,17 +16,10 @@ Frontend: Thymeleaf, Bootstrap, HTML, CSS
 Database: MySQL
 
 # Setup
-Clone the repository:
-git clone https://github.com/your-username/gestion-consultation.git
+### 1️⃣ Clone the repository:  
+git clone https://github.com/your-username/your-repository.git
 
-Navigate to the project directory:
-cd gestion-consultation
-
-Build the project using Maven:
-mvn clean install
-
-Run the application:
-mvn spring-boot:run
+ Accéder au répertoire du projet :
 
 # accueil
  Cette page représente l'interface d'accueil du Système de Consultation des Patients.
