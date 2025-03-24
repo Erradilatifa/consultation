@@ -27,6 +27,10 @@ mvn clean install
 ### 4️⃣ Run the application:
 mvn spring-boot:run
 
+# Usage
+Access the application at http://localhost:8080
+Use the navigation bar to access different sections of the application
+
 
 
 # accueil
