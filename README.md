@@ -32,6 +32,18 @@ Access the application at http://localhost:8080
 
 Use the navigation bar to access different sections of the application
 
+# Fonctionnalités
+
+💼 Gestion des Patients
+
+Gérer facilement les informations des patients : ajout, modification, suppression, et consultation des données essentielles (nom, email, téléphone, etc.).
+
+Interface intuitive et fluide, conçue pour optimiser la gestion des dossiers patients en toute simplicité.
+
+📅 Planification des Consultations
+
+Suivi détaillé des rendez-vous avec des informations comme la date, la description de la consultation et l’identité du patient.
+
 
 
 # accueil
