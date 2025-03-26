@@ -24,7 +24,7 @@ git clone https://github.com/Erradilatifa/consultation
 
  ### 2️⃣Navigate to the project directory:
  ``` bash command 
- cd gestion-consultation
+ cd gestioncons
  ``` 
 ### 3️⃣ Build the project using Maven:
 ``` bash command 
