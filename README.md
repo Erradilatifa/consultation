@@ -13,10 +13,12 @@ Organisation Optimale des Données : Accès rapide et structuré aux information
 Backend: Spring Boot, Spring Data JPA, Spring Web, Lombok, Hibernate
 
 Frontend: Thymeleaf, Bootstrap, HTML, CSS
+
 Database: MySQL
 
 # Setup
 ### 1️⃣ Clone the repository:  
+''' branch '''
 git clone https://github.com/Erradilatifa/consultation
 
  ### 2️⃣Navigate to the project directory:
