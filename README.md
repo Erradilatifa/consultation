@@ -23,12 +23,18 @@ git clone https://github.com/Erradilatifa/consultation
 ``` 
 
  ### 2️⃣Navigate to the project directory:
+ ``` bash command 
  cd gestion-consultation
+ ``` 
 ### 3️⃣ Build the project using Maven:
+``` bash command 
 mvn clean install
+``` 
 
 ### 4️⃣ Run the application:
+``` bash command 
 mvn spring-boot:run
+``` 
 
 # Usage
 Access the application at http://localhost:8080
