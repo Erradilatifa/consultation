@@ -18,8 +18,9 @@ Database: MySQL
 
 # Setup
 ### 1️⃣ Clone the repository:  
-''' branch '''
+``` bash command 
 git clone https://github.com/Erradilatifa/consultation
+``` 
 
  ### 2️⃣Navigate to the project directory:
  cd gestion-consultation
